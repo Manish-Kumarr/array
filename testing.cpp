@@ -1,39 +1,56 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution
+char soloDance(string s, int n)
 {
-public:
-    vector<vector<int>> merge(vector<vector<int>> &intervals)
+    map<char, int> m;
+    int countWithOne = 0;
+    int count = 0;
+    for (int i = 0; i < n; i++)
+        m[s[i]]++;
+
+    for (auto it : m)
+        if (it.second == 1)
+            countWithOne++;
+
+    if (countWithOne >= 3)
     {
-        vector<vector<int>> ans;
-        int i;
-        sort(intervals.begin(), intervals.end());
-        int n = intervals.size();
-        for (i = 0; i < n - 1; i++)
+        for (int i = n - 1; i >= 0; i--)
         {
-            if (intervals[i][1] > intervals[i + 1][0])
-            {
-                ans.push_back({min(intervals[i][0], intervals[i + 1][0]), max(intervals[i][1], intervals[i + 1][1])});
-                i++;
-            }
-            else
-                ans.push_back({intervals[i][0], intervals[i][1]});
+            if (m[s[i]] == 1)
+                count++;
+            if (count == 3)
+                return s[i];
         }
-        if (i == n - 1)
-            ans.push_back({intervals[i][0], intervals[i][1]});
-        return ans;
     }
-};
+    else if (countWithOne == 2)
+    {
+        for (int i = n - 1; i >= 0; i--)
+        {
+            if (m[s[i]] == 1)
+                count++;
+            if (count == 2)
+                return s[i];
+        }
+    }
+    else if (countWithOne == 1)
+    {
+        for (int i = n - 1; i >= 0; i--)
+        {
+            if (m[s[i]] == 1)
+                count++;
+            if (count == 1)
+                return s[i];
+        }
+    }
+    else
+        return s[0];
+}
 
 int main()
 {
-    vector<vector<int>> v = {{1, 4}, {0, 0}};
-    // vector<vector<int>> v = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
-    vector<vector<int>> ans;
-    Solution s;
-    ans = s.merge(v);
-    for (auto x : ans)
-        cout << x[0] << " " << x[1] << endl;
+    string s = "aabdf";
+    int n = s.size();
+    cout << soloDance(s, n);
     return 0;
 }
