@@ -1,56 +1,66 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-char soloDance(string s, int n)
+string camelCase(string s)
 {
-    map<char, int> m;
-    int countWithOne = 0;
-    int count = 0;
+    int n = s.length();
+    int res_ind = 0;
     for (int i = 0; i < n; i++)
-        m[s[i]]++;
+    {
+        if (s[i] == ' ')
+        {
+            s[i + 1] = toupper(s[i + 1]);
+            continue;
+        }
+        else
+            s[res_ind++] = s[i];
+    }
+    return s.substr(0, res_ind);
+}
 
-    for (auto it : m)
-        if (it.second == 1)
-            countWithOne++;
+string pascalCase(string s)
+{
+    int n = s.length();
+    int res_ind = 0;
+    s[0] = toupper(s[0]);
+    for (int i = 0; i < n; i++)
+    {
+        if (s[i] == ' ')
+        {
+            s[i + 1] = toupper(s[i + 1]);
+            continue;
+        }
+        else
+            s[res_ind++] = s[i];
+    }
+    return s.substr(0, res_ind);
+}
 
-    if (countWithOne >= 3)
-    {
-        for (int i = n - 1; i >= 0; i--)
-        {
-            if (m[s[i]] == 1)
-                count++;
-            if (count == 3)
-                return s[i];
-        }
-    }
-    else if (countWithOne == 2)
-    {
-        for (int i = n - 1; i >= 0; i--)
-        {
-            if (m[s[i]] == 1)
-                count++;
-            if (count == 2)
-                return s[i];
-        }
-    }
-    else if (countWithOne == 1)
-    {
-        for (int i = n - 1; i >= 0; i--)
-        {
-            if (m[s[i]] == 1)
-                count++;
-            if (count == 1)
-                return s[i];
-        }
-    }
-    else
-        return s[0];
+string kebabCase(string s)
+{
+    int n = s.length();
+    for (int i = 0; i < n; i++)
+        if (s[i] == ' ')
+            s[i] = '-';
+
+    return s;
+}
+string snakeCase(string s)
+{
+    int n = s.length();
+    for (int i = 0; i < n; i++)
+        if (s[i] == ' ')
+            s[i] = '_';
+
+    return s;
 }
 
 int main()
 {
-    string s = "aabdf";
-    int n = s.size();
-    cout << soloDance(s, n);
+    string str = "user login count";
+    cout << camelCase(str) << endl;
+    cout << kebabCase(str) << endl;
+    cout << snakeCase(str) << endl;
+    cout << pascalCase(str) << endl;
     return 0;
 }
