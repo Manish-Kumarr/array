@@ -1,29 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int rotated(int arr[], int n)
+int findKRotation(int arr[], int N)
 {
     int lo = 0;
-    int hi = n - 1;
-    int mid;
+    int hi = N - 1;
+    if (arr[hi] >= arr[lo])
+        return 0;
     while (lo <= hi)
     {
-        mid = lo + (hi - lo) / 2;
-        int next = (mid + 1) % n;
-        int prev = (mid - 1) % n;
-        if (arr[mid] <= prev && arr[mid] <= next)
+        int mid = lo + (hi - lo) / 2;
+        int prev = (mid + N - 1) % N;
+        if (arr[mid] < arr[prev])
             return mid;
-        if (arr[lo] < arr[mid])
+        else if (arr[mid] >= arr[0])
             lo = mid + 1;
-        else if (arr[mid] < arr[hi])
+        else
             hi = mid - 1;
     }
+    return 0;
 }
 
 int main()
 {
-    int arr[] = {11, 12, 13, 0, 1, 2, 5, 6, 8};
+    int arr[] = {8, 5, 6, 7};
     int n = sizeof(arr) / sizeof(arr[0]);
-    cout << rotated(arr, n);
+    cout << findKRotation(arr, n);
     return 0;
 }
