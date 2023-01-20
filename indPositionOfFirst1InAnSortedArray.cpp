@@ -1,11 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int firstOccurence(vector<int> arr, int x)
+int firstOccurence(vector<int> arr, int x, int lo, int hi)
 {
     int n = arr.size();
-    int lo = 0;
-    int hi = n - 1;
     int res = -1;
     while (lo <= hi)
     {
@@ -33,12 +31,12 @@ int findPosition(vector<int> arr, int target)
         l = h;
         h = (n - 1 >= h * 2) ? h * 2 : n - 1;
     }
-    return firstOccurence(arr, target);
+    return firstOccurence(arr, target, l, h);
 }
 
 int main()
 {
-    vector<int> arr = {0, 1};
+    vector<int> arr = {0};
     int ans = findPosition(arr, 1);
     if (ans == -1)
         cout << "Element not found";
