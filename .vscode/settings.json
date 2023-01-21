@@ -9,6 +9,8 @@
         "functional": "cpp",
         "ratio": "cpp",
         "streambuf": "cpp",
-        "cstdlib": "cpp"
+        "cstdlib": "cpp",
+        "deque": "cpp",
+        "vector": "cpp"
     }
 }

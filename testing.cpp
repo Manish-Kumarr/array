@@ -1,66 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string camelCase(string s)
+bool wordPattern(string s, string pattern)
 {
-    int n = s.length();
-    int res_ind = 0;
+    int k = 0;
+    string temp = "";
+    vector<string> v;
+    int n = s.size();
+
     for (int i = 0; i < n; i++)
     {
         if (s[i] == ' ')
         {
-            s[i + 1] = toupper(s[i + 1]);
-            continue;
+            v.push_back(temp);
+            k++;
+            temp = "";
         }
         else
-            s[res_ind++] = s[i];
+            temp = temp + s[i];
     }
-    return s.substr(0, res_ind);
-}
+    v.push_back(temp);
 
-string pascalCase(string s)
-{
-    int n = s.length();
-    int res_ind = 0;
-    s[0] = toupper(s[0]);
-    for (int i = 0; i < n; i++)
+    map<char, string> m;
+    for (int i = 0; i < pattern.size(); i++)
     {
-        if (s[i] == ' ')
+        if (m.find(pattern[i]) != m.end())
         {
-            s[i + 1] = toupper(s[i + 1]);
-            continue;
+            if (m[pattern[i]] != v[i])
+                return false;
         }
         else
-            s[res_ind++] = s[i];
+        {
+            for (auto x : m)
+                if (x.second == v[i])
+                    return false;
+            m.insert({pattern[i], v[i]});
+        }
     }
-    return s.substr(0, res_ind);
-}
-
-string kebabCase(string s)
-{
-    int n = s.length();
-    for (int i = 0; i < n; i++)
-        if (s[i] == ' ')
-            s[i] = '-';
-
-    return s;
-}
-string snakeCase(string s)
-{
-    int n = s.length();
-    for (int i = 0; i < n; i++)
-        if (s[i] == ' ')
-            s[i] = '_';
-
-    return s;
+    return true;
 }
 
 int main()
 {
-    string str = "user login count";
-    cout << camelCase(str) << endl;
-    cout << kebabCase(str) << endl;
-    cout << snakeCase(str) << endl;
-    cout << pascalCase(str) << endl;
+    string pattern = "jquery";
+    string str = "jquery";
+    cout << wordPattern(str, pattern);
     return 0;
 }
