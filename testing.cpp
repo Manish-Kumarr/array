@@ -1,49 +1,55 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool wordPattern(string s, string pattern)
+int search(string pat, string txt)
 {
-    int k = 0;
-    string temp = "";
-    vector<string> v;
-    int n = s.size();
+    // code here
+    int k = pat.size();
+    int anagramCount = 0;
+    int i = 0, j = 0, n = txt.size();
+    map<char, int> m;
+    for (int i = 0; i < k; i++)
+        m[pat[i]]++;
 
-    for (int i = 0; i < n; i++)
-    {
-        if (s[i] == ' ')
-        {
-            v.push_back(temp);
-            k++;
-            temp = "";
-        }
-        else
-            temp = temp + s[i];
-    }
-    v.push_back(temp);
+    int count = m.size();
 
-    map<char, string> m;
-    for (int i = 0; i < pattern.size(); i++)
+    while (j < n)
     {
-        if (m.find(pattern[i]) != m.end())
+        // Initial Step
+        for (auto x : m)
+            if (x.first == txt[j])
+            {
+                m[txt[j]]--;
+                if (m[txt[j]] == 0)
+                    count--;
+            }
+        // When size is smaller than k
+        if (j - i + 1 < k)
+            j++;
+        // When size is equal
+        else if (j - i + 1 == k)
         {
-            if (m[pattern[i]] != v[i])
-                return false;
-        }
-        else
-        {
+            if (count == 0)
+                anagramCount++;
             for (auto x : m)
-                if (x.second == v[i])
-                    return false;
-            m.insert({pattern[i], v[i]});
+                if (x.first == txt[i])
+                {
+                    m[txt[i]]++;
+                    if (m[txt[i]] == 0)
+                        count--;
+                    else
+                        count++;
+                }
+            i++, j++;
         }
     }
-    return true;
+    return anagramCount;
 }
 
 int main()
 {
-    string pattern = "jquery";
-    string str = "jquery";
-    cout << wordPattern(str, pattern);
+    string txt = "aabaabaa";
+    string pat = "aaba";
+    cout << search(pat, txt);
     return 0;
 }
