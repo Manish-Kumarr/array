@@ -32,14 +32,14 @@ int search(string pat, string txt)
             if (count == 0)
                 anagramCount++;
             for (auto x : m)
+            {
                 if (x.first == txt[i])
                 {
                     m[txt[i]]++;
-                    if (m[txt[i]] == 0)
-                        count--;
-                    else
+                    if (m[txt[i]] == 1)
                         count++;
                 }
+            }
             i++, j++;
         }
     }
