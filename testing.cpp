@@ -1,55 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int search(string pat, string txt)
+vector<int> majorityElement(vector<int> &nums)
 {
-    // code here
-    int k = pat.size();
-    int anagramCount = 0;
-    int i = 0, j = 0, n = txt.size();
-    map<char, int> m;
-    for (int i = 0; i < k; i++)
-        m[pat[i]]++;
+}
 
-    int count = m.size();
-
-    while (j < n)
+bool check(int arr[], int n)
+{
+    vector<int> v;
+    int sum = 0;
+    for (int i = 0; i < n; i++)
     {
-        // Initial Step
-        for (auto x : m)
-            if (x.first == txt[j])
-            {
-                m[txt[j]]--;
-                if (m[txt[j]] == 0)
-                    count--;
-            }
-        // When size is smaller than k
-        if (j - i + 1 < k)
-            j++;
-        // When size is equal
-        else if (j - i + 1 == k)
-        {
-            if (count == 0)
-                anagramCount++;
-            for (auto x : m)
-            {
-                if (x.first == txt[i])
-                {
-                    m[txt[i]]++;
-                    if (m[txt[i]] == 1)
-                        count++;
-                }
-            }
-            i++, j++;
-        }
+        sum += arr[i];
+        if (find(v.begin(), v.end(), sum) != v.end())
+            return true;
+        v.push_back(sum);
     }
-    return anagramCount;
+    return false;
 }
 
 int main()
 {
-    string txt = "aabaabaa";
-    string pat = "aaba";
-    cout << search(pat, txt);
+    vector<int> nums = {2, 3, 2, 10, 10};
+    vector<int> ans = majorityElement(nums);
+    for (auto x : ans)
+        cout << x << " ";
+
     return 0;
 }
