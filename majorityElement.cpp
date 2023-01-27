@@ -39,6 +39,7 @@ int majorityElement1(vector<int> &nums)
 int main()
 {
     vector<int> nums = {1, 1, 1, 2, 5, 1};
-    cout << majorityElement1(nums);
+    cout << majorityElement1(nums) << endl;
+    cout << majorityElement(nums) << endl;
     return 0;
 }
