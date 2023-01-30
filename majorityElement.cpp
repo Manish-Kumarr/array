@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// without space striver leetcode
 int majorityElement(vector<int> &nums)
 {
     int count = 0;
@@ -18,6 +19,7 @@ int majorityElement(vector<int> &nums)
     return candidate;
 }
 
+// with space
 int majorityElement1(vector<int> &nums)
 {
     unordered_map<int, int> umap;
@@ -36,10 +38,39 @@ int majorityElement1(vector<int> &nums)
     return ans;
 }
 
+// without space gfg
+int majorityElement2(vector<int> &arr)
+{
+    int count = 1;
+    int candidate = 0;
+    int n = arr.size();
+    for (int i = 1; i < n; i++)
+    {
+        if (arr[candidate] == arr[i])
+            count++;
+        else
+            count--;
+        if (count == 0)
+        {
+            count = 1;
+            candidate = i;
+        }
+    }
+
+    count = 0;
+    for (int i = 0; i < n; i++)
+        if (arr[candidate] == arr[i])
+            count++;
+
+    if (count <= n / 2)
+        return -1;
+    else
+        return arr[candidate];
+}
+
 int main()
 {
-    vector<int> nums = {1, 1, 1, 2, 5, 1};
-    cout << majorityElement1(nums) << endl;
-    cout << majorityElement(nums) << endl;
+    vector<int> nums = {3, 1};
+    cout << majorityElement2(nums) << endl;
     return 0;
 }
